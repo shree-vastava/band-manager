@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 
 
@@ -7,9 +7,19 @@ class BandCreate(BaseModel):
     name: str
 
 
+class BandUpdate(BaseModel):
+    name: Optional[str] = None
+    logo: Optional[str] = None
+    established_date: Optional[date] = None
+    description: Optional[str] = None
+
+
 class BandResponse(BaseModel):
     id: int
     name: str
+    logo: Optional[str] = None
+    established_date: Optional[date] = None
+    description: Optional[str] = None
     created_at: datetime
     updated_at: datetime
     

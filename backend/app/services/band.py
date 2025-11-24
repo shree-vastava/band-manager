@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from app.repositories.band import BandRepository
 from app.repositories.auth import AuthRepository
-from app.schemas.band import BandCreate, BandResponse
+from app.schemas.band import BandCreate, BandResponse, BandUpdate
 from typing import List
 
 
@@ -57,8 +57,8 @@ class BandService:
         
         return BandResponse.model_validate(band)
     
-    def update_band_name(self, band_id: int, name: str, user_id: int) -> BandResponse:
-        """Update band name"""
+    def update_band(self, band_id: int, band_data: BandUpdate, user_id: int) -> BandResponse:
+        """Update band details"""
         # Check if user is a member
         band = self.band_repo.get_band_by_id(band_id)
         if not band:
@@ -79,5 +79,28 @@ class BandService:
             )
         
         # Update band
-        updated_band = self.band_repo.update_band_name(band_id, name)
+        updated_band = self.band_repo.update_band(band_id, band_data)
         return BandResponse.model_validate(updated_band)
+    
+    def delete_band(self, band_id: int, user_id: int) -> None:
+        """Delete a band"""
+        band = self.band_repo.get_band_by_id(band_id)
+        
+        if not band:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Band not found"
+            )
+        
+        is_member = any(
+            member.user_id == user_id and member.is_active 
+            for member in band.members
+        )
+        
+        if not is_member:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You are not a member of this band"
+            )
+        
+        self.band_repo.delete_band(band_id)

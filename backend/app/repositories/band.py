@@ -2,7 +2,9 @@ from sqlalchemy.orm import Session
 from app.models.band import Band
 from app.models.band_member import BandMember
 from app.models.user import User
+from app.schemas.band import BandUpdate
 from typing import Optional, List
+from datetime import datetime
 
 
 class BandRepository:
@@ -41,11 +43,23 @@ class BandRepository:
             BandMember.is_active == True
         ).all()
     
-    def update_band_name(self, band_id: int, name: str) -> Optional[Band]:
-        """Update band name"""
+    def update_band(self, band_id: int, band_data: BandUpdate) -> Optional[Band]:
+        """Update band details"""
         band = self.get_band_by_id(band_id)
         if band:
-            band.name = name
+            # Update only provided fields
+            update_data = band_data.model_dump(exclude_unset=True)
+            for field, value in update_data.items():
+                setattr(band, field, value)
+            
+            band.updated_at = datetime.utcnow()
             self.db.commit()
             self.db.refresh(band)
         return band
+    
+    def delete_band(self, band_id: int) -> None:
+        """Delete a band"""
+        band = self.get_band_by_id(band_id)
+        if band:
+            self.db.delete(band)
+            self.db.commit()
