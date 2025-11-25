@@ -102,11 +102,17 @@ const ManageBand: React.FC = () => {
     try {
       setLoading(true);
       
-      const updateData = {
-        name: values.name,
-        description: values.description || null,
-        established_date: values.established_date ? values.established_date.format('YYYY-MM-DD') : null,
-      };
+      const updateData: any = {};
+
+if (values.name) {
+  updateData.name = values.name;
+}
+if (values.description !== undefined && values.description !== '') {
+  updateData.description = values.description;
+}
+if (values.established_date) {
+  updateData.established_date = values.established_date.format('YYYY-MM-DD');
+}
 
       await bandService.updateBand(currentBand.id, updateData);
       

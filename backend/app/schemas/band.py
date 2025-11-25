@@ -13,10 +13,9 @@ class BandCreate(BaseModel):
 
 class BandUpdate(BaseModel):
     name: Optional[str] = None
-    email: Optional[EmailStr] = None
-    phone: Optional[str] = None
-    role: Optional[str] = None
-    is_admin: Optional[bool] = None
+    logo: Optional[str] = None
+    established_date: Optional[date] = None
+    description: Optional[str] = None
 
 
 

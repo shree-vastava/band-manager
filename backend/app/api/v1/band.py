@@ -136,7 +136,14 @@ def upload_logo(
     
     # Update band with new logo path
     logo_url = f"/uploads/logos/{unique_filename}"
-    updated_band = band_service.update_band(band_id, BandUpdate(logo=logo_url), user_id)
+    print(f"DEBUG upload_logo: logo_url = {logo_url}") 
+    band_update_obj = BandUpdate(logo=logo_url)
+    print(f"DEBUG: band_update_obj = {band_update_obj}")
+    print(f"DEBUG: band_update_obj.logo = {band_update_obj.logo}")
+    print(f"DEBUG: band_update_obj.model_dump() = {band_update_obj.model_dump()}")
+    print(f"DEBUG: band_update_obj.model_dump(exclude_none=True) = {band_update_obj.model_dump(exclude_none=True)}")
+
+    updated_band = band_service.update_band(band_id, band_update_obj, user_id)
     
     return {
         "message": "Logo uploaded successfully",

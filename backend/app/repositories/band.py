@@ -50,13 +50,15 @@ class BandRepository:
         band = self.get_band_by_id(band_id)
         if band:
             # Update only provided fields
-            update_data = band_data.model_dump(exclude_unset=True)
+            update_data = band_data.model_dump(exclude_none=True)
+            print(f"DEBUG: update_data = {update_data}")
             for field, value in update_data.items():
                 setattr(band, field, value)
             
             band.updated_at = datetime.utcnow()
             self.db.commit()
             self.db.refresh(band)
+            print(f"DEBUG: band after update = {band.name}, {band.description}, {band.logo}")  # Add this
         return band
     
     def delete_band(self, band_id: int) -> None:
