@@ -15,11 +15,18 @@ class BandMember(Base):
     
     # For non-user members (session musicians, etc.)
     name = Column(String, nullable=True)  # Only needed if user_id is null
-    email = Column(String, nullable=True)
+    email = Column(String, nullable=True, index=True)  # Added index for email lookup
     phone = Column(String, nullable=True)
     
-    # Common fields
-    role = Column(String, nullable=True)  # e.g., "Guitarist", "Vocalist", "Manager"
+    # Profile
+    profile_picture = Column(String, nullable=True)  # URL or path to profile image
+    
+    # Musical role (e.g., "Guitarist", "Vocalist", "Drummer")
+    role = Column(String, nullable=True)
+    
+    # Permission level
+    is_admin = Column(Boolean, default=False)  # Can manage band, add/remove members
+    
     is_active = Column(Boolean, default=True)
     joined_at = Column(DateTime, default=datetime.utcnow)
     

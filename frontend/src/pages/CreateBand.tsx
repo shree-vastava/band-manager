@@ -3,19 +3,26 @@ import { Form, Input, Button, Card, Typography, Space } from 'antd';
 import { TeamOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { bandService } from '../services/bandService';
+import { useBand } from '../contexts/BandContext';
 import { message } from 'antd';
 
 const { Title, Text } = Typography;
 
 const CreateBand: React.FC = () => {
   const navigate = useNavigate();
+  const { refreshBands, setCurrentBand } = useBand();
   const [loading, setLoading] = React.useState(false);
 
   const onFinish = async (values: { name: string }) => {
     setLoading(true);
     try {
-      await bandService.createBand({ name: values.name });
+      const newBand = await bandService.createBand({ name: values.name });
       message.success('Band created successfully!');
+      
+      // Refresh bands list and set the new band as current
+      await refreshBands();
+      setCurrentBand(newBand);
+      
       navigate('/home/dashboard');
     } catch (error: any) {
       message.error(error.response?.data?.detail || 'Failed to create band');

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, Card, Typography, Space } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, Space, Divider } from 'antd';
+import { UserOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LoginRequest } from '../types/auth';
 
 const { Title, Text } = Typography;
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +32,11 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    // Redirect to backend Google OAuth endpoint
+    window.location.href = `${API_URL}/api/v1/auth/google`;
+  };
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -48,6 +55,26 @@ const Login: React.FC = () => {
             <Title level={2}>Band Management</Title>
             <Text type="secondary">Login to your account</Text>
           </div>
+
+          {/* Google Sign In Button */}
+          <Button 
+            icon={<GoogleOutlined />}
+            size="large" 
+            block
+            onClick={handleGoogleLogin}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              gap: 8
+            }}
+          >
+            Continue with Google
+          </Button>
+
+          <Divider style={{ margin: '8px 0' }}>
+            <Text type="secondary" style={{ fontSize: 12 }}>OR</Text>
+          </Divider>
 
           <Form
             name="login"

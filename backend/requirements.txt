@@ -14,6 +14,9 @@ bcrypt==4.1.2
 google-auth==2.23.4
 google-auth-oauthlib==1.1.0
 
+# HTTP Client (for Google OAuth)
+httpx==0.25.2
+
 # Validation
 pydantic==2.5.0
 pydantic-settings==2.1.0

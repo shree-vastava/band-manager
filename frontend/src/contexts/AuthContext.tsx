@@ -3,7 +3,11 @@ import { authService } from '../services/authService';
 import { User, LoginRequest, SignupRequest, AuthContextType } from '../types/auth';
 import { message } from 'antd';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface ExtendedAuthContextType extends AuthContextType {
+  setAuthToken: (token: string, user: User) => void;
+}
+
+const AuthContext = createContext<ExtendedAuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -68,7 +72,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     message.info('Logged out successfully');
   };
 
-  const value: AuthContextType = {
+  const setAuthToken = (newToken: string, userData: User) => {
+    setToken(newToken);
+    setUser(userData);
+  };
+
+  const value: ExtendedAuthContextType = {
     user,
     token,
     login,
@@ -76,6 +85,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     logout,
     isAuthenticated: !!token && !!user,
     loading,
+    setAuthToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

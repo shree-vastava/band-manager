@@ -1,9 +1,9 @@
 from pydantic import BaseModel, EmailStr
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
 
 
-class BandCreate(BaseModel):
+class BandMemberCreate(BaseModel):
     name: str
     email: Optional[EmailStr] = None
     phone: Optional[str] = None
@@ -11,26 +11,12 @@ class BandCreate(BaseModel):
     is_admin: bool = False
 
 
-class BandUpdate(BaseModel):
+class BandMemberUpdate(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
     phone: Optional[str] = None
     role: Optional[str] = None
     is_admin: Optional[bool] = None
-
-
-
-class BandResponse(BaseModel):
-    id: int
-    name: str
-    logo: Optional[str] = None
-    established_date: Optional[date] = None
-    description: Optional[str] = None
-    created_at: datetime
-    updated_at: datetime
-    
-    class Config:
-        from_attributes = True
 
 
 class BandMemberResponse(BaseModel):

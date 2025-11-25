@@ -4,7 +4,7 @@ export interface User {
   name: string;
   is_active: boolean;
   created_at: string;
-  has_band: boolean;  // Add this
+  has_band: boolean;
 }
 
 export interface LoginRequest {
@@ -16,12 +16,10 @@ export interface SignupRequest {
   email: string;
   password: string;
   name: string;
-  // Remove band_name from here
 }
 
 export interface GoogleAuthCallback {
   code: string;
-  band_name?: string;
 }
 
 export interface AuthResponse {
@@ -37,4 +35,5 @@ export interface AuthContextType {
   logout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
+  setAuthToken: (token: string, user: User) => void;
 }

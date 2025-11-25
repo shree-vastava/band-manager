@@ -23,7 +23,9 @@ class BandRepository:
         band_member = BandMember(
             band_id=band.id,
             user_id=user.id,
-            role="Admin",
+            name=user.name,
+            email=user.email,
+            is_admin=True,
             is_active=True
         )
         self.db.add(band_member)

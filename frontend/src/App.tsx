@@ -5,12 +5,12 @@ import { BandProvider } from './contexts/BandContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import CreateBand from './pages/CreateBand';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import ManageBand from './pages/ManageBand';
 import Setlists from './pages/Setlists';
 import Shows from './pages/Shows';
+import GoogleCallback from './pages/Googlecallback';
 
 const App: React.FC = () => {
   return (
@@ -22,15 +22,9 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             
-            {/* Create band route - After signup, before home */}
-            <Route 
-              path="/create-band" 
-              element={
-                <ProtectedRoute>
-                  <CreateBand />
-                </ProtectedRoute>
-              } 
-            />
+            {/* Google OAuth callback */}
+            <Route path="/auth/google/callback" element={<GoogleCallback />} />
+            
             
             {/* Protected routes - WITH side menu */}
             <Route
