@@ -28,7 +28,8 @@ class Show(Base):
     show_members = Column(Text, nullable=True)  # Stored as JSON string: ["Member1", "Member2", "Guest Artist"]
     
     # Financial
-    payment = Column(Numeric(10, 2), nullable=True)  # Amount paid
+    payment = Column(Numeric(10, 2), nullable=True)  # Total amount received for the show
+    band_fund_amount = Column(Numeric(10, 2), nullable=True)  # Amount saved for band fund
     
     # Band Configuration
     piece_count = Column(Integer, nullable=True)  # 4pc, 5pc, etc.
@@ -48,5 +49,6 @@ class Show(Base):
     
     # Relationships
     band = relationship("Band", back_populates="shows")
+    member_payments = relationship("ShowPayment", back_populates="show", cascade="all, delete-orphan")
     # We'll add setlist relationship later
     # setlists = relationship("ShowSetlist", back_populates="show", cascade="all, delete-orphan")

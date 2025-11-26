@@ -20,6 +20,7 @@ class ShowCreate(BaseModel):
     event_manager: Optional[str] = None
     show_members: Optional[List[str]] = None  # List of member names (from band or free text)
     payment: Optional[Decimal] = None
+    band_fund_amount: Optional[Decimal] = None  # Amount saved for band fund
     piece_count: Optional[int] = None
     status: Optional[ShowStatus] = ShowStatus.UPCOMING
     poster: Optional[str] = None
@@ -33,6 +34,7 @@ class ShowUpdate(BaseModel):
     event_manager: Optional[str] = None
     show_members: Optional[List[str]] = None  # List of member names (from band or free text)
     payment: Optional[Decimal] = None
+    band_fund_amount: Optional[Decimal] = None  # Amount saved for band fund
     piece_count: Optional[int] = None
     status: Optional[ShowStatus] = None
     poster: Optional[str] = None
@@ -48,6 +50,7 @@ class ShowResponse(BaseModel):
     event_manager: Optional[str] = None
     show_members: Optional[List[str]] = None  # List of member names
     payment: Optional[Decimal] = None
+    band_fund_amount: Optional[Decimal] = None  # Amount saved for band fund
     piece_count: Optional[int] = None
     status: ShowStatus
     poster: Optional[str] = None

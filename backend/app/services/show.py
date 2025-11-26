@@ -4,6 +4,7 @@ from app.repositories.show import ShowRepository
 from app.repositories.band import BandRepository
 from app.schemas.show import ShowCreate, ShowUpdate, ShowResponse
 from typing import List
+from decimal import Decimal
 
 
 class ShowService:
@@ -43,6 +44,7 @@ class ShowService:
             event_manager=show_data.event_manager,
             show_members=show_data.show_members,
             payment=show_data.payment,
+            band_fund_amount=show_data.band_fund_amount,
             piece_count=show_data.piece_count,
             status=show_data.status,
             poster=show_data.poster,
@@ -132,6 +134,7 @@ class ShowService:
             event_manager=show_data.event_manager,
             show_members=show_data.show_members,
             payment=show_data.payment,
+            band_fund_amount=show_data.band_fund_amount,
             piece_count=show_data.piece_count,
             status=show_data.status,
             poster=show_data.poster,
@@ -164,3 +167,26 @@ class ShowService:
             )
         
         return self.show_repo.delete_show(show_id)
+    
+    def get_total_band_fund(self, band_id: int, user_id: int) -> Decimal:
+        """Get total band fund for a band"""
+        # Check if user is a member of the band
+        band = self.band_repo.get_band_by_id(band_id)
+        if not band:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Band not found"
+            )
+        
+        is_member = any(
+            member.user_id == user_id and member.is_active 
+            for member in band.members
+        )
+        
+        if not is_member:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You are not a member of this band"
+            )
+        
+        return self.show_repo.get_total_band_fund(band_id)

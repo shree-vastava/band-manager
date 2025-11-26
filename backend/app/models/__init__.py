@@ -7,5 +7,6 @@ from app.models.band_member import BandMember
 from app.models.master_setlist import MasterSetlist
 from app.models.song import Song
 from app.models.show import Show
+from app.models.show_payment import ShowPayment
 
-__all__ = ["Base", "User", "Band", "BandMember", "MasterSetlist", "Song", "Show"]
+__all__ = ["Base", "User", "Band", "BandMember", "MasterSetlist", "Song", "Show", "ShowPayment"]
