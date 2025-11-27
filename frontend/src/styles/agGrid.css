@@ -1,0 +1,17 @@
+.ag-theme-quartz {
+  --ag-row-height: 56px;
+  --ag-header-height: 52px;
+  --ag-borders: solid 1px;
+  --ag-border-color: #e8e8e8;
+  --ag-row-border-color: #f0f0f0;
+  --ag-header-background-color: #fafafa;
+  --ag-odd-row-background-color: #ffffff;
+  --ag-row-hover-color: #f5f5f5;
+  --ag-font-size: 14px;
+  --ag-wrapper-border-radius: 8px;
+}
+
+.ag-theme-quartz .ag-cell {
+  display: flex;
+  align-items: center;
+}

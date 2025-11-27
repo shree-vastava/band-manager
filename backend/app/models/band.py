@@ -15,7 +15,8 @@ class Band(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Relationships
+   # Relationships
     members = relationship("BandMember", back_populates="band", cascade="all, delete-orphan")
     master_setlists = relationship("MasterSetlist", back_populates="band", cascade="all, delete-orphan")
+    songs = relationship("Song", back_populates="band", cascade="all, delete-orphan")
     shows = relationship("Show", back_populates="band", cascade="all, delete-orphan")

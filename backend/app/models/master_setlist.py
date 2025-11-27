@@ -15,4 +15,4 @@ class MasterSetlist(Base):
     
     # Relationships
     band = relationship("Band", back_populates="master_setlists")
-    songs = relationship("Song", back_populates="master_setlist", cascade="all, delete-orphan")
+    setlist_songs = relationship("SetlistSong", back_populates="setlist", cascade="all, delete-orphan")

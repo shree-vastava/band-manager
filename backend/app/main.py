@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.api.v1 import api_router
 from app.database import engine, Base
-from app.models import User, Band, BandMember, MasterSetlist, Song, Show
+from app.models import User, Band, BandMember, MasterSetlist, Song, SetlistSong, Show
 from pathlib import Path
 
 # Create uploads directory

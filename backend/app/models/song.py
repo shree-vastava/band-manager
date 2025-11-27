@@ -8,7 +8,7 @@ class Song(Base):
     __tablename__ = "songs"
     
     id = Column(Integer, primary_key=True, index=True)
-    master_setlist_id = Column(Integer, ForeignKey("master_setlists.id", ondelete="CASCADE"), nullable=False)
+    band_id = Column(Integer, ForeignKey("bands.id", ondelete="CASCADE"), nullable=False)
     
     # Basic Info
     title = Column(String, nullable=False, index=True)
@@ -31,6 +31,5 @@ class Song(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
-    master_setlist = relationship("MasterSetlist", back_populates="songs")
-    # Comment out for now - we'll add this when we create Show models
-    # show_setlist_songs = relationship("ShowSetlistSong", back_populates="song", cascade="all, delete-orphan")
+    band = relationship("Band", back_populates="songs")
+    setlist_songs = relationship("SetlistSong", back_populates="song", cascade="all, delete-orphan")
